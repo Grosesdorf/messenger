@@ -6,11 +6,8 @@ class Dialogs extends MX_Controller {
     function index(){
 
         $this->load->model('modelDialogs');
-        $data['result'] = $this->modelDialogs->getDialogs('date_add');
+        $data['result'] = $this->modelDialogs->getDialogs($_POST['sort']);
 
-//        $this->load->view('viewHeader');
         $this->load->view('viewDialogs', $data);
-//        $this->load->view('footer');
-
     }
 }
