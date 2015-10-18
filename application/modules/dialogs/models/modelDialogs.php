@@ -8,20 +8,34 @@ class ModelDialogs extends CI_Model{
         parent::__construct();
     }
 
-    function getDialogs($sort){
+    function getDialogs($id, $sort){
 
         if($sort == "ASC"){
-            $sort = 'ORDER BY date_add';
+            $sort = 'ORDER BY Messages.date_add';
         }else {
-            $sort = 'ORDER BY date_add DESC';
+            $sort = 'ORDER BY Messages.date_add DESC';
         }
 
-        $sql = "SELECT Dialogs.id, Users.name AS name_own, name_comp, Messages.message, Messages.date_add
+        $sql = "SELECT Dialogs.id, Dialogs.id_owner_dialog, Users.name, Dialogs.id_companion_dialog, name_mess, message, Dialogs.date_add AS date_dialog, date_message
                 FROM Dialogs
-                LEFT JOIN Users ON Users.id = Dialogs.id_owner_dialog
-                LEFT JOIN ((SELECT Users.id, Users.name as name_comp FROM Users) AS Users_tmp) ON Users_tmp.id = Dialogs.id_companion_dialog
-                JOIN Messages ON Messages.id_dialog = Dialogs.id " . $sort;
+                JOIN (SELECT id_dialog, message, name AS name_mess, Messages.date_add AS date_message
+                      FROM Messages
+                      JOIN Users
+                      ON Messages.id_user = Users.id
+                {$sort}) AS M
+				ON Dialogs.id = M.id_dialog
+				JOIN Users ON Dialogs.id_companion_dialog = Users.id
+                WHERE id_owner_dialog = {$id} OR id_companion_dialog = {$id}
+                GROUP BY Dialogs.id";
         $result = $this->db->query($sql);
-        return $result;
+        $rows = $result->result();
+        return $rows;
+    }
+
+    public function getNameById($id){
+        $sql = "SELECT name FROM Users WHERE id = '{$id}'";
+        $result = $this->db->query($sql);
+        $rows = $result->row_array();
+        return $rows['name'];
     }
 }
