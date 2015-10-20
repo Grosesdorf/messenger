@@ -17,9 +17,12 @@ if($rows) {
         echo '=> ' . $row->name . '<br />';
         echo $row->date_message . '<br />';
         echo substr($row->message, 0, 350) . '<br />';
-        echo '<form action="#" method="post">
-          <input type="button" name="dialog" value="Перейти к диалогу">
-          </form>';
+        echo '<form action="/dialog/showDialog" method="post">
+             <input type="submit" name="submit" value="К диалогу">
+             <input type="hidden" name="id_dialog" value="' . $row->id . '">
+             <input type="hidden" name="id_own" value="' . $row->id_owner_dialog . '">
+             <input type="hidden" name="id_comp" value="' . $row->id_companion_dialog . '">
+             </form>';
         echo '<hr>';
     }
 }
