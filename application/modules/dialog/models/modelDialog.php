@@ -22,10 +22,14 @@ class ModelDialog extends CI_Model{
         return $rows;
     }
 
-//    public function getNameById($id){
-//        $sql = "SELECT name FROM Users WHERE id = '{$id}'";
-//        $result = $this->db->query($sql);
-//        $rows = $result->row_array();
-//        return $rows['name'];
-//    }
+    function addMessage($dialogId, $userId, $message){
+        $data = [
+            'id_dialog' => $dialogId,
+            'id_user' => $userId,
+            'message' => $message
+        ];
+
+        $addMessageResult = $this->db->insert('Messages', $data);
+        return $addMessageResult;
+    }
 }
