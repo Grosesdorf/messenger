@@ -7,11 +7,15 @@ foreach($rows as $row){
     echo '<hr>';
 }
 ?>
-<form action="/dialog/addMessage/<?php echo $idDialog?>" method="post">
-    <p><textarea id="text" rows="1" cols="85" name="message" placeholder="Ваше сообщение"></textarea></p>
+
+<script src="jquery.js"></script>
+<script src="myjs.js"></script>
+
+<form>
+    <p><textarea id="message" rows="1" cols="85" name="message" placeholder="Ваше сообщение"></textarea></p>
     <p><input type="hidden" name="userId" value="<?php echo $userId;?>"></p>
     <p><input type="hidden" name="dialogId" value="<?php echo $idDialog;?>"></p>
-    <p><input type="submit" id="submit" name="submit" value="Оправить"></p>
+    <p><input type="button" id="submit" name="submit" value="Оправить"></p>
 </form>
 
 

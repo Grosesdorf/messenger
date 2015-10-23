@@ -6,7 +6,7 @@ $("document").ready(function(){
 	$("#submit").click(function(){
 		var send = $("form").serialize();
 
-		aalert(send);
+		alert(send);
 
 	$.ajax({
 		url: "/dialog/addMessage/" + send['dialogId'],
